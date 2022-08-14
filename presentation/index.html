@@ -1,0 +1,276 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/blood.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<section>
+						<h2>What is Scope?</h2>
+						<img src="https://miro.medium.com/max/1400/1*KxHwVbB0zhnSVrhrWtT-gg.jpeg" width="800" alt="">
+					</section>
+					<section data-auto-animate>
+						<pre data-id="code-animation"><code data-trim data-line-numbers>
+							const message = 'Hello World!';
+							console.log(message); // 'Hello World!'
+						</code></pre>
+						<pre data-auto-animate class="fragment fade-in" data-id="code-animation"><code data-line-numbers="4" data-trim data-line-numbers>
+							if (true) {
+								const message = 'Hello World!';
+							}
+							console.log(message); // ReferenceError: message is not defined
+						</code></pre>
+					</section>
+					<section data-auto-animate>
+						<h3>What does it happen?</h3>
+					</section>
+					<section data-auto-animate>
+						<h3>What does it happen?</h3>
+						<p style="font-size: 28px">The <b>if</b> code block creates a <em>scope</em> for message variable. And <span style="color: rgb(228, 255, 110);">message</span> variable can be accessed only within this <em>scope</em>.</p>
+					</section>
+					<section data-auto-animate>
+						<h3>What does it happen?</h3>
+						<p style="font-size: 28px">The <b>if</b> code block creates a <em>scope</em> for message variable. And <span style="color: rgb(228, 255, 110);">message</span> variable can be accessed only within this <em>scope</em>.</p>
+						<pre data-id="code-animation"><code data-line-numbers="1-5" data-trim>
+							if (true) {
+								// scope
+								const message = 'Hello World!';
+								console.log(message); // 'Hello World!'
+							}
+							console.log(message); // ReferenceError
+						</code></pre>
+					</section>
+					<section>
+						<p>The <b>scope</b> is a policy that manages the accessibility of variables.</p>
+					</section>
+				</section>
+
+				<section>
+					<h3>Scope types</h3>
+					<ul>
+						<li class="fragment fade-in">Global</li>
+						<li class="fragment fade-in">Block</li>
+						<li class="fragment fade-in">Function</li>
+					</ul>
+				</section>
+
+				<section>
+					<section>
+						<h3><span class="red-title">Global</span> scope</h3>
+						<ul>
+							<li class="fragment fade-in">outermost scope</li>
+							<li class="fragment fade-in">Any variable that’s not inside any function or block, is inside the global scope.</li>
+							<li class="fragment fade-in">accessible from any inner scope</li>
+						</ul>
+					</section>
+					<section data-auto-animate>
+						<h3><span class="red-title">Global</span> scope</h3>
+						<pre data-id="code-animation"><code data-trim data-line-numbers>
+							let programmingLanguageName = "JavaScript";
+							// code here can use programmingLanguageName
+						</code></pre>
+					</section>
+					<section data-auto-animate>
+						<h3><span class="red-title">Global</span> scope</h3>
+						<pre data-id="code-animation"><code data-trim data-line-numbers>
+							let programmingLanguageName = "JavaScript";
+							// code here can use programmingLanguageName
+							
+							function myFunction() {
+								// code here can also use programmingLanguageName
+							}
+						</code></pre>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h3><span class="red-title">Block</span> Scope</h3>
+						<ul class="block-list">
+							<li class="fragment fade-in block-list__item">defined by pair of {} curly braces</li>
+							<li class="fragment fade-in block-list__item">for variables declared using let and const</li>
+							<li class="fragment fade-in block-list__item">can be accessed only inside of {}</li>
+						</ul>
+					</section>
+					<section>
+						<h3><span class="red-title">Block</span> Scope</h3>
+						<pre data-id="code-animation"><code data-trim data-line-numbers="1-6" data-line-numbers>
+							for (const word of ['Rolling', 'Scopes', 'School']) {
+								// "for" block scope
+								const message = 'Welcome';
+								console.log(word);   // 'Rolling', 'Scopes', 'School'
+								console.log(message); // 'Welcome', 'Welcome', 'Welcome'
+							}
+							
+							console.log(word);   // throws ReferenceError
+							console.log(message); // throws ReferenceError
+						</code></pre>
+					</section>
+					<section>
+						<h4><span style="color: red;">！！！</span> "var" is not block scoped</h4>
+						<pre data-id="code-animation"><code data-trim data-line-numbers="3-4, 7" data-line-numbers>
+							if (true) {
+								// "if" block scope
+								var count = 0;
+								console.log(count); // 0
+							}
+
+							console.log(count); // 0
+						</code></pre>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h3><span class="red-title">Function</span> Scope</h3>
+						<p>Variables declared inside a function</p>
+					</section>
+					<section>
+
+						<h3>Function Scope</h3>
+						<pre data-id="code-animation"><code data-trim data-line-numbers="1-7" data-line-numbers>
+							function run() {
+								// "run" function scope
+								var message = 'Run, Forrest, Run!';
+								console.log(message); // 'Run, Forrest, Run!'
+							}
+
+							run();
+							console.log(message); // throws ReferenceError
+						</code></pre>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h4>Scopes can be <span class="red-title">nested</span></h4>
+
+						<pre data-id="code-animation"><code data-trim data-line-numbers="1-7" data-line-numbers>
+							function showMessage() {
+								var programmingLanguageName = 'JavaScript';
+							
+								function planet() {
+									var god = 'God';
+							
+									console.log(programmingLanguageName, god); // JavaScriptGod
+								}
+							}
+						</code></pre>
+					</section>
+
+					<section>
+						<h4>Scope's <span class="red-title">shadowing</span></h4>
+
+						<pre data-id="code-animation"><code data-trim data-line-numbers="6-12" data-line-numbers>
+							var message = 'Hello';
+
+							function shadowing() {
+								var message = 'Oh! I am changed';
+
+								function alsoShadowing() {
+									var message = 'Here another new value!';
+
+									console.log(message); // 'Here another new value!'
+								}
+
+								alsoShadowing();
+								console.log(message); // 'Oh! I am changed'
+							}
+
+							shadowing();
+						</code></pre>
+					</section>
+
+					<section>
+						<h4>Scope's <span class="red-title">shadowing</span></h4>
+
+						<pre data-id="code-animation"><code data-trim data-line-numbers="4, 13" data-line-numbers>
+							var message = 'Hello';
+
+							function shadowing() {
+								var message = 'Oh! I am changed';
+
+								function alsoShadowing() {
+									var message = 'Here another new value!';
+
+									console.log(message); // 'Here another new value!'
+								}
+
+								alsoShadowing();
+								console.log(message); // 'Oh! I am changed'
+							}
+
+							shadowing();
+						</code></pre>
+					</section>
+				</section>
+
+				<section>
+					<h3>Variables <span class="red-title">isolation</span></h3>
+
+					<pre data-id="code-animation"><code data-trim data-line-numbers="3-4, 8-9" data-line-numbers>
+						function foo() {
+							// "foo" function scope
+							let count = 0;
+							console.log(count); // 0
+						}
+						function bar() {
+							// "bar" function scope
+							let count = 1;
+							console.log(count); // 1
+						}
+						foo();
+						bar();
+					</code></pre>
+				</section>
+
+				<section>
+					<h3>Useful <span class="red-title">materials</span></h3>
+					<ul>
+						<li>
+							<a href="https://dmitripavlutin.com/javascript-scope/">A Simple Explanation of Scope</a>
+						</li>
+						<li>
+							<a href="https://dev.to/ale3oula/the-hor-r-o-r-scope-global-local-and-block-scope-in-js-37a1">Global, Local and Block scope in JS</a>
+						</li>
+						<li>
+							<a href="https://www.youtube.com/watch?v=c_rHAYNBotQ">RSSchool 2018Q1. JS scope + JS functions</a>
+						</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3 class="red-title">Thank you for attention!</h3>
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
